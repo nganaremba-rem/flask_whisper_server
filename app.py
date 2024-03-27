@@ -41,25 +41,26 @@ def transcribeRoute():
     
     # Specifying the file path 
     file_path = os.path.abspath(os.path.join(os.getcwd(), "static/audio"))
+    audio_path = os.path.join(file_path, "audio")
     
     create_path_if_not_exists(file_path)
 
     # Remove the older audio if available
     try:
-        if os.path.exists(os.path.join(file_path, 'audio')):
+        if os.path.exists(audio_path):
             os.remove(file_path)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
     # Save the audio to the file path specified
     try:
-        audio_file.save(file_path)
+        audio_file.save(audio_path)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
     # Transcribe the audio and return the text
     try:
-        data = transcribeAudio(audio_url=file_path, language=language)
+        data = transcribeAudio(audio_url=audio_path, language=language)
         return jsonify(data)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
