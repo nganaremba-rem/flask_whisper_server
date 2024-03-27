@@ -2,6 +2,7 @@ import os
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from transcribeAudio import transcribeAudio
+from utils import create_path_if_not_exists
 
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": ['http://localhost:3000', 'http://127.0.0.1:3000']}})
@@ -39,13 +40,13 @@ def transcribeRoute():
         return jsonify({"error": "Only .wav or .flac file extension is supported!"}), 400
     
     # Specifying the file path 
-    file_path = os.path.abspath(os.path.join(os.getcwd(), "static/audio/audio"))
+    file_path = os.path.abspath(os.path.join(os.getcwd(), "static/audio"))
     
-    print(file_path)
+    create_path_if_not_exists(file_path)
 
     # Remove the older audio if available
     try:
-        if os.path.exists(file_path):
+        if os.path.exists(os.path.join(file_path, 'audio')):
             os.remove(file_path)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
