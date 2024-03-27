@@ -8,6 +8,7 @@ CORS(app, resources={r"/api/*": {"origins": ['http://localhost:3000', 'http://12
 
 @app.route('/', methods=['GET', 'POST'])
 def indexRoute():
+     # Specifying the file path 
     return 'Server is running!'
 
 @app.post('/api/transcribe')
@@ -38,7 +39,7 @@ def transcribeRoute():
         return jsonify({"error": "Only .wav or .flac file extension is supported!"}), 400
     
     # Specifying the file path 
-    file_path = 'static/audio/audio'
+    file_path = os.path.abspath(os.path.join(os.getcwd(), "static/audio/audio"))
 
     # Remove the older audio if available
     try:
