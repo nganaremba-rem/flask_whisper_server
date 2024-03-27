@@ -40,6 +40,8 @@ def transcribeRoute():
     
     # Specifying the file path 
     file_path = os.path.abspath(os.path.join(os.getcwd(), "static/audio/audio"))
+    
+    print(file_path)
 
     # Remove the older audio if available
     try:
