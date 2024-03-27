@@ -45,13 +45,6 @@ def transcribeRoute():
     
     create_path_if_not_exists(file_path)
 
-    # Remove the older audio if available
-    try:
-        if os.path.exists(audio_path):
-            os.remove(file_path)
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
     # Save the audio to the file path specified
     try:
         audio_file.save(audio_path)
